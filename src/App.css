@@ -1,0 +1,227 @@
+:root {
+  --primary:#003135;
+  --second:#024950;
+  --third:#14848d;
+  --fourth:#14848d;
+  --fifth:#68c8d9;
+  --text-day:#003135;
+  --text-night:whitesmoke;
+  --shadow-day:#003135;
+  --shadow-night:whitesmoke;
+
+}
+@keyframes appear {
+  from {
+    opacity: 0;
+    scale: 0.5;
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}
+@keyframes slide {
+  from {
+    transform: translateX(-30%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+body {
+  background-color: white;
+}
+* {
+
+  margin:0;
+  padding:0;
+  box-sizing: border-box;
+  outline-offset: 0;
+  text-decoration: none;
+  list-style: none;
+  color: var(--primary);
+  font-family: 'Calibri';
+  overflow-x: clip;
+  transition: all .1s linear;
+  cursor: default;
+}
+
+.navBar {
+  display: grid;
+  grid-template-columns: .5fr 1.5fr;
+  align-items: center;
+  height: clamp(3rem,4rem,6rem);
+  border-bottom: 1px solid black;
+}
+.menu {
+  display: grid;
+  grid-template-columns: 1.3fr .7fr;
+  height: 100%;
+}
+.menu > div {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  cursor: pointer;
+  font-size: 1.2rem;
+  
+}
+
+.navigation-list {  
+  gap: 1rem;
+  justify-content: space-evenly;
+  align-items: center;
+
+}
+.navigation-list span {
+  font-weight: 500;
+}
+.navigation-list span:hover {
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 1.4rem;
+}
+.navBar *{
+  color: var(--primary);
+}
+.name {
+  color: var(--third);
+}
+.preferences-navbar {
+  justify-content: end;
+  padding-right: 4rem;
+  gap: 3rem;
+}
+.name {
+  font-size: 2em;
+  font-weight: 1000;
+  cursor: pointer;
+  text-shadow: 0px 1px  black;
+  font-style: italic;
+  padding-left: 1rem;
+}
+
+.languagelabel{
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   gap: .2rem;
+  
+  }
+  .languageicon {
+  fill: var(--primary);
+  height: 1.4rem;
+  padding-top: .2rem ;
+  }
+
+.language {
+  display: flex;
+  gap:.5rem;
+  align-items: center;
+}
+.language select {
+  border-radius: .2rem;
+  padding: .2rem .5rem;
+  width: clamp(fit-content,4rem,5rem);
+  outline-offset: 0;
+  outline: none;
+  border: none;
+  background-color: whitesmoke;
+  font-weight: 600;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+.language select option{
+  border-radius: .5rem;
+  background-color: transparent;
+  
+}
+.language select option:hover {
+  background-color: var(--primary); 
+  color: white;
+}
+select::after {
+  background-color: blue;
+}
+select::picker(select){
+  background-color: var(--fifth);
+}
+
+.displayMode {
+display: flex;
+align-items: center;
+gap: .2rem;
+}
+.displayMode input {
+  opacity: 0;  
+  width: 0;
+  height: none;
+}
+.modeIcon {
+  padding: .1rem;
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  
+}
+.modeIcons {
+    cursor: pointer;
+     padding: .2rem;
+     border-radius: 1rem;
+     display: flex;
+     position: relative;
+     width: 3rem;
+     align-items: center;
+     justify-content: center;
+     gap: .5rem;
+     height: 3rem;
+}
+.modeIcons .display-highlight {
+  position: absolute;
+  border-radius: 1rem;  
+  /* background-color: var(--primary); */
+  width: 2.25rem;
+  height: 100%;
+  right:0;
+  top: 0;
+}
+.modeIcons svg {
+  
+}
+.display-highlight {
+  transition: all .5s linear;
+}
+.dispalynight .display-highlight {
+  left: 0;
+  /* background-color: white; */
+}
+.dispalynight .moon {
+  z-index: 99;
+    fill: white;
+  background-color: transparent;
+}
+.moon {
+  fill: white;
+}
+
+.sun {
+  fill: var(--primary);
+  z-index: 99;
+}
+.dispalynight .sun {
+ fill: rgb(6, 6, 16);
+}
+
+
+.nightMode ,.nightMode *:not(.moon , .display-highlight) {
+  background-color: rgb(6, 6, 16);
+  color: rgb(227, 227, 227); 
+
+}
+
+.navBarNight {
+  border-bottom-color: white;
+}

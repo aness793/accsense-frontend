@@ -1,0 +1,67 @@
+.arch-container {
+            width: clamp(90svw, 100svw, 110svw);
+            min-height: 90svh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 1rem;
+            color: whitesmoke;
+            position: relative;
+            background-color: white;
+            padding-bottom: 10rem;
+            
+        }
+        
+.arch-choice-container {
+    position: absolute; 
+    left: 1rem;
+    display: flex;
+    align-items: start;
+    padding: .5rem;
+    height: 150svh;
+    animation: slideTop .5s linear;
+}
+.arch-choice {
+    position: sticky;
+    top: 15rem;
+    background-color: whitesmoke;
+    box-shadow: 2px 2px 3px var(--shadow-day);
+}
+.arch-choice:first-child , .arch-choice span:first-child {
+    border-top-left-radius: .5rem;
+    border-top-right-radius: .5rem;
+}
+.arch-choice:last-child , .arch-choice span:last-child {
+    border-bottom-left-radius: .5rem;
+    border-bottom-right-radius: .5rem;
+}
+.arch-choice span {
+    padding: .5rem .5rem;
+    font-weight: 600;
+    width: 7rem;
+    height: 4rem;
+    text-align: center;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.arch-chosen {
+    background-color: var(--primary);
+    color: whitesmoke;
+}
+.diagram {
+        padding-top: 2rem;
+        animation: slide .5s linear;
+
+}
+
+.diagram img {
+    width: 50rem;
+}
+.diagram h1 {
+    padding: .5rem;
+    text-align: center;
+    font-size: 3rem;
+}
