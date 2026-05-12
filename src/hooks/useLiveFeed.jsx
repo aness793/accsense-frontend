@@ -6,7 +6,9 @@ export function useLiveFeed() {
   const [history, setHistory] = useState([])
 
   useEffect(() => {
-    const ws = new WebSocket('ws://localhost:8000/ws')
+    // const ws = new WebSocket('ws://localhost:8000/ws')
+    const wsUrl = import.meta.env.VITE_WS_URL
+    const ws = new WebSocket(wsUrl)
 
     ws.onopen = () => {
       setConnected(true)

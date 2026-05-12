@@ -20,7 +20,7 @@ function App() {
     <div className={nightMode ? 'nightMode ' : 'dayMode '}>
       <div className={nightMode? "navBar navBarNight" : "navBar"}>
             <div className="name" onClick={()=> changePage('home')} >
-                AccSense
+                AcciSense
             </div>
         <div className="menu">
           <div className="navigation-list">

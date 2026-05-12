@@ -21,7 +21,8 @@ function Input({nightMode}) {
 }, [])
     const handleDownloadReport = async () => {
     try {
-        const response = await fetch("http://127.0.0.1:8000/generate-report", {
+        // const response = await fetch("http://127.0.0.1:8000/generate-report", {
+        const response = await fetch(import.meta.env.VITE_API_URL+"/generate-report", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -63,7 +64,8 @@ function Input({nightMode}) {
 
         setLoading(true);
         try {
-            const response = await fetch("http://127.0.0.1:8000/predict", {
+            // const response = await fetch("http://127.0.0.1:8000/predict", {
+            const response = await fetch(import.meta.env.VITE_API_URL+"/predict", {
                 method: "POST",
                 body: formData,
             });
