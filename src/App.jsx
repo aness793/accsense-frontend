@@ -27,7 +27,7 @@ function App() {
             <span onClick={()=> changePage('home')}>{t('Home')}</span>
               <span onClick={()=> changePage('performance')} >{t('performance')}</span>
               <span onClick={()=> changePage('architecture')}>{t('architecture')}</span>
-              <span onClick={()=> changePage('mqtt')}>MQTT</span>
+              <span onClick={()=> changePage('mqtt')}>Live Monitoring</span>
           </div>
                 
           <div className="preferences-navbar">
