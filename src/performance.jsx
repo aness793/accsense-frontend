@@ -132,8 +132,8 @@ function Performance() {
 
         {perChoice == 'chart' &&
           <div className="charts-container">
-            <img src="public/comparison_bar_chart_left.png" alt="" />
-            <img src="public/comparison_bar_chart_right.png" alt="" />
+            <img src="/public/comparison_bar_chart_left.png" alt="" />
+            <img src="/public/comparison_bar_chart_right.png" alt="" />
           </div>
 
         }

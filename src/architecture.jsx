@@ -37,25 +37,25 @@ useEffect(() => {
               {archChoice == 'general' &&
                   <div>
                       <h1>{t('General Pipeline')}</h1>
-                      <img src="/figures/accsense_inference_pipeline.png" alt="" />
+                      <img src="/public/accsense_inference_pipeline.png" alt="" />
                   </div>
                   }
               {archChoice == 'r3d' &&
                   <div>
                       <h1>R3D-18 Architecture</h1>
-                      <img src="/figures/r3d.webp" alt="" />
+                      <img src="/public/r3d.webp" alt="" />
                   </div>
               }
               {archChoice == 'slowfast' &&
               <div>
                       <h1>SlowFast R50 Architecture</h1>
-                  <img src="/figures/slowfast.webp" alt="" />
+                  <img src="/public/slowfast.webp" alt="" />
                   </div>
               }
               {archChoice == 'swin' &&
                   <div>
                       <h1>Swin Transformer Architecture</h1>
-                      <img src="/figures/swin.webp" alt="" />
+                      <img src="/public/swin.webp" alt="" />
                   </div>
               
               }
