@@ -7,10 +7,10 @@ function Architecture() {
     const {t} = useTranslation()
 useEffect(() => {
   const srcs = [
-    '/public/accsense_inference_pipeline.png',
-    '/public/r3d.webp',
-    '/public/slowfast.webp',
-    '/public/swin.webp',
+    '/accsense_inference_pipeline.png',
+    '/r3d.webp',
+    '/slowfast.webp',
+    '/swin.webp',
   ];
   srcs.forEach((src) => {
     const img = new Image();
@@ -37,7 +37,7 @@ useEffect(() => {
               {archChoice == 'general' &&
                   <div>
                       <h1>{t('General Pipeline')}</h1>
-                      <img src="/public/accsense_inference_pipeline.png" alt="" />
+                      <img src="/accsense_inference_pipeline.png" alt="" />
                   </div>
                   }
               {archChoice == 'r3d' &&
@@ -49,13 +49,13 @@ useEffect(() => {
               {archChoice == 'slowfast' &&
               <div>
                       <h1>SlowFast R50 Architecture</h1>
-                  <img src="/public/slowfast.webp" alt="" />
+                  <img src="/slowfast.webp" alt="" />
                   </div>
               }
               {archChoice == 'swin' &&
                   <div>
                       <h1>Swin Transformer Architecture</h1>
-                      <img src="/public/swin.webp" alt="" />
+                      <img src="/swin.webp" alt="" />
                   </div>
               
               }
