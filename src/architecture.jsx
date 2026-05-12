@@ -43,7 +43,7 @@ useEffect(() => {
               {archChoice == 'r3d' &&
                   <div>
                       <h1>R3D-18 Architecture</h1>
-                      <img src="/public/r3d.webp" alt="" />
+                      <img src="/r3d.webp" alt="" />
                   </div>
               }
               {archChoice == 'slowfast' &&
