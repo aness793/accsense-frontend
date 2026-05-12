@@ -7,10 +7,10 @@ function Architecture() {
     const {t} = useTranslation()
 useEffect(() => {
   const srcs = [
-    '/figures/accsense_inference_pipeline.png',
-    '/figures/r3d.webp',
-    '/figures/slowfast.webp',
-    '/figures/swin.webp',
+    '/public/accsense_inference_pipeline.png',
+    '/public/r3d.webp',
+    '/public/slowfast.webp',
+    '/public/swin.webp',
   ];
   srcs.forEach((src) => {
     const img = new Image();
