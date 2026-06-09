@@ -1,6 +1,6 @@
-# AccSense Frontend
+# AcciSense Frontend
 
-React/Vite frontend for AccSense — an automatic road accident detection and severity estimation system using deep learning on surveillance video.
+React/Vite frontend for AcciSense — an automatic road accident detection and severity estimation system using deep learning on surveillance video.
 
 ## Overview
 
@@ -22,7 +22,7 @@ This frontend provides:
 ## Project Structure
 
 ```
-accsense-frontend/
+AcciSense-frontend/
 ├── src/
 │   ├── components/
 │   ├── hooks/
