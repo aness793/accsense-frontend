@@ -1,16 +1,84 @@
-# React + Vite
+# AccSense Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React/Vite frontend for AccSense — an automatic road accident detection and severity estimation system using deep learning on surveillance video.
 
-Currently, two official plugins are available:
+## Overview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+This frontend provides:
+- Video upload and model selection interface
+- Real-time inference results display with severity classification
+- Live monitoring dashboard via WebSocket (MQTT feed from edge devices)
+- Accident history table from the database
+- PDF incident report download
+- Multi-language support (English, French, Arabic with RTL)
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Framework**: React + Vite
+- **Styling**: CSS
+- **i18n**: react-i18next
+- **Deployment**: Vercel
 
-## Expanding the ESLint configuration
+## Project Structure
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```
+accsense-frontend/
+├── src/
+│   ├── components/
+│   ├── hooks/
+│   │   └── useLiveFeed.js   # WebSocket hook for live MQTT feed
+│   ├── i18n/                # Translation files
+│   └── main.jsx
+├── public/
+│   └── figures/             # Architecture diagram images
+├── .env                     # Local environment variables
+├── .env.production          # Production environment variables
+└── vite.config.js
+```
+
+## Environment Variables
+
+For local development, create a `.env` file:
+
+```
+VITE_API_URL=http://localhost:8000
+VITE_WS_URL=ws://localhost:8000/ws
+```
+
+For production, create a `.env.production` file:
+
+```
+VITE_API_URL=https://your-backend-url
+VITE_WS_URL=wss://your-backend-url/ws
+```
+
+## Running Locally
+
+```bash
+npm install
+npm run dev
+```
+
+Make sure the backend is running on port 8000 before starting the frontend.
+
+## Building for Production
+
+```bash
+npm run build
+```
+
+The output will be in the `dist/` folder.
+
+## Features
+
+- **Detection**: Upload a video clip and select R3D-18, SlowFast, or Swin Transformer to run inference
+- **Live Monitor**: Real-time feed from edge camera simulator via WebSocket
+- **History**: Table of past detections pulled from Supabase
+- **Report**: Download a PDF incident report for major accidents
+- **Dark Mode**: Toggle between light and dark themes
+- **i18n**: Supports English, French, and Arabic (RTL)
+
+## Author
+
+Aness Rahmani — Master's Thesis, Université Djilali Bounaama Khemis Miliana  
+Supervisor: Slim Rouabah
