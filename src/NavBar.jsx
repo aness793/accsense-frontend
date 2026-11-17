@@ -5,7 +5,10 @@ function NavBar() {
     return (
         <div className="navBar">
             <div className="name">
-                AccSense
+                <span>
+                    
+<p>AccSense</p></span>
+                
             </div>
             <div className="menu">
                 <span className="language">

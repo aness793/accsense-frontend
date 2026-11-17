@@ -1,6 +1,7 @@
 .mqtt_bigger_container {
     display: flex;
     flex-direction: column;
+    min-height: 90svh;
 }
 .mqtt_container {
     display: grid;

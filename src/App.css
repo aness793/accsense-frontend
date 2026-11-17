@@ -1,4 +1,5 @@
 :root {
+  --bg:white;
   --primary:#003135;
   --second:#024950;
   --third:#14848d;
@@ -33,6 +34,9 @@
 body {
   background-color: white;
 }
+.nightMode body {
+  background-color: rgb(6, 6, 16);
+}
 * {
 
   margin:0;
@@ -42,10 +46,10 @@ body {
   text-decoration: none;
   list-style: none;
   color: var(--primary);
-  font-family: 'Calibri';
   overflow-x: clip;
   transition: all .1s linear;
   cursor: default;
+  font-family: 'calibri';
 }
 
 .navBar {
@@ -94,15 +98,27 @@ body {
   padding-right: 4rem;
   gap: 3rem;
 }
-.name {
+.name  p{
   font-size: 2em;
   font-weight: 1000;
   cursor: pointer;
-  text-shadow: 0px 1px  black;
+  /* text-shadow: 0px 1px  black; */
   font-style: italic;
+  color: var(--primary);
+}
+.name span {
+  display: flex;
+  align-items: center;
   padding-left: 1rem;
 }
-
+.name span svg {
+  stroke:whitesmoke;
+  fill: var(--fourth);
+  height: 3rem;
+}
+.name .sense {
+  color: var(--fourth);
+}
 .languagelabel{
    display: flex;
    align-items: center;
@@ -111,7 +127,7 @@ body {
   
   }
   .languageicon {
-  fill: var(--primary);
+  fill: var(--fourth);
   height: 1.4rem;
   padding-top: .2rem ;
   }
@@ -134,20 +150,24 @@ body {
   -webkit-appearance: none;
   -moz-appearance: none;
 }
+.nightMode .language select {
+  background-color: rgb(6, 6, 16);
+  color: whitesmoke;
+}
 .language select option{
   border-radius: .5rem;
   background-color: transparent;
   
 }
 .language select option:hover {
-  background-color: var(--primary); 
+  background-color: var(--fourth); 
   color: white;
 }
 select::after {
   background-color: blue;
 }
 select::picker(select){
-  background-color: var(--fifth);
+  background-color: var(--fourth);
 }
 
 .displayMode {
@@ -210,17 +230,26 @@ gap: .2rem;
 .sun {
   fill: var(--primary);
   z-index: 99;
+  cursor: pointer;
 }
 .dispalynight .sun {
  fill: rgb(6, 6, 16);
 }
 
 
-.nightMode ,.nightMode *:not(.moon , .display-highlight) {
+.nightMode ,.nightMode :is(div,section) {
   background-color: rgb(6, 6, 16);
   color: rgb(227, 227, 227); 
 
 }
+.nightMode * {
+  color: whitesmoke;
+}
+/* .nightMode ,.nightMode *:not(.moon , .display-highlight,a,h1,h2,h3) {
+  background-color: rgb(6, 6, 16);
+  color: rgb(227, 227, 227); 
+
+} */
 
 .navBarNight {
   border-bottom-color: white;

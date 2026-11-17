@@ -10,17 +10,24 @@ import Architecture from './architecture'
 import LiveMonitor from './liveMonitor'
 import i18n from './i18n'
 import { useTranslation } from 'react-i18next'
+import './index.css'
 function App() {
-  const [nightMode, changeMode] = useState(false) 
+  const [nightMode, changeMode] = useState(
+  () => localStorage.getItem('nightMode') === 'true'
+)
   const [page,changePage] = useState('home')
     const { t } = useTranslation()
-  
+
   return (
 
     <div className={nightMode ? 'nightMode ' : 'dayMode '}>
       <div className={nightMode? "navBar navBarNight" : "navBar"}>
-            <div className="name" onClick={()=> changePage('home')} >
-                AcciSense
+        <div className="name" onClick={() => changePage('home')} >
+          <span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 24 24"  stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-check preview-icon"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
+            <p>    Acci</p>    <p className='sense'>Sense</p>        
+                      </span>
+
             </div>
         <div className="menu">
           <div className="navigation-list">
@@ -34,7 +41,7 @@ function App() {
             <span className="language">
             <label htmlFor="menu" className='languagelabel'>
               <svg className='languageicon' xmlns="http://www.w3.org/2000/svg" stroke-width="2" viewBox="0 0 640 640"><path d="M192 64C209.7 64 224 78.3 224 96L224 128L352 128C369.7 128 384 142.3 384 160C384 177.7 369.7 192 352 192L342.4 192L334 215.1C317.6 260.3 292.9 301.6 261.8 337.1C276 345.9 290.8 353.7 306.2 360.6L356.6 383L418.8 243C423.9 231.4 435.4 224 448 224C460.6 224 472.1 231.4 477.2 243L605.2 531C612.4 547.2 605.1 566.1 589 573.2C572.9 580.3 553.9 573.1 546.8 557L526.8 512L369.3 512L349.3 557C342.1 573.2 323.2 580.4 307.1 573.2C291 566 283.7 547.1 290.9 531L330.7 441.5L280.3 419.1C257.3 408.9 235.3 396.7 214.5 382.7C193.2 399.9 169.9 414.9 145 427.4L110.3 444.6C94.5 452.5 75.3 446.1 67.4 430.3C59.5 414.5 65.9 395.3 81.7 387.4L116.2 370.1C132.5 361.9 148 352.4 162.6 341.8C148.8 329.1 135.8 315.4 123.7 300.9L113.6 288.7C102.3 275.1 104.1 254.9 117.7 243.6C131.3 232.3 151.5 234.1 162.8 247.7L173 259.9C184.5 273.8 197.1 286.7 210.4 298.6C237.9 268.2 259.6 232.5 273.9 193.2L274.4 192L64.1 192C46.3 192 32 177.7 32 160C32 142.3 46.3 128 64 128L160 128L160 96C160 78.3 174.3 64 192 64zM448 334.8L397.7 448L498.3 448L448 334.8z"/></svg>:
-                      <select name="lang" id="menu" className='selectLang'  onChange={(e) => i18n.changeLanguage(e.target.value)} >
+                      <select name="lang" id="menu" className='selectLang' value={i18n.language}   onChange={(e) => {i18n.changeLanguage(e.target.value); localStorage.setItem('lang', e.target.value)}} >
                         {/* <option value="ar">Arabic</option> */}
                           <option value="en" selected >English
                         </option>
@@ -47,7 +54,10 @@ function App() {
                     <span  id='switchMode' 
                         >
                         <label className='modeIcon'>
-                            <input type="checkbox" name="displayMode" />
+                            <input type="checkbox" name="displayMode" onChange={(e) => {
+    changeMode(e.target.checked)
+    localStorage.setItem('nightMode', e.target.checked)
+  }} />
                   <div className={nightMode ? 'dispalynight modeIcons' : '  modeIcons'} >
                     <div className="display-highlight"></div>
                     {nightMode &&
