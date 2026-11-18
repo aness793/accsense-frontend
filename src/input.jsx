@@ -59,12 +59,9 @@ const [sampleData, setSampleData] = useState(null) // { id, data } from the prec
         try {
           const r = await fetch(`${API}/health`, { signal: AbortSignal.timeout(10000) })
           if (r.ok) {
-            if (!cancelled) {
-              setServer('ready')
-              fetch(`${API}/warmup?model_name=r3d`, { method: 'POST' }).catch(() => {})
-            }
-            return
-          }
+  if (!cancelled) setServer('ready')
+  return
+}
         } catch {
           /* keep polling */
         }
@@ -115,9 +112,16 @@ const pickSample = (s) => {
   setSrcVideo(s.video)
   setSampleData(null)
   fetch(s.json)
-    .then((r) => (r.ok ? r.json() : null))
-    .then((d) => setSampleData(d ? { id: s.id, data: d } : null))
-    .catch(() => setSampleData(null))
+    .then((r) => {
+      const isJson = (r.headers.get('content-type') || '').includes('json')
+      if (!r.ok || !isJson) throw new Error('not json')
+      return r.json()
+    })
+    .then((d) => setSampleData({ id: s.id, data: d }))
+    .catch(() => {
+      setSampleData(null)
+      setError(t('Precomputed results for this clip are missing.'))
+    })
 }
 
 const fileName = sample ? `${sample.id}.mp4` : rawFile?.name
@@ -128,15 +132,14 @@ const fileName = sample ? `${sample.id}.mp4` : rawFile?.name
     onFile(e.dataTransfer.files?.[0])
   }
 
-  const handlePredict = async () => {
-  if (!rawFile && !sample) return setError(t('Pick a sample or upload a video first.'))
+const handlePredict = async () => {
   setError('')
   setResult(null)
 
-  // precomputed path: instant, no backend
-  const pre =
-    sample && sampleData?.id === sample.id ? sampleData.data.models?.[model] : null
-  if (pre) {
+  // samples: precomputed only, never the backend
+  if (sample) {
+    const pre = sampleData?.id === sample.id ? sampleData.data.models?.[model] : null
+    if (!pre) return setError(t('No precomputed result for this clip and model.'))
     setResult({
       status: 'success',
       model,
@@ -146,19 +149,25 @@ const fileName = sample ? `${sample.id}.mp4` : rawFile?.name
     return
   }
 
-  // live path: uploads, or a sample whose JSON is missing
+  // uploads: live inference only if the backend can actually run it
+  if (!rawFile) return setError(t('Pick a sample or upload a video first.'))
+  if (!LIVE) {
+    return setError(
+      t('Live inference is unavailable on this server because of memory limits. Pick a sample clip.')
+    )
+  }
+
+  const formData = new FormData()
+  formData.append('video', rawFile)
+  formData.append('model_name', model)
+
   setLoading(true)
   try {
-    let file = rawFile
-    if (!file) {
-      const blob = await (await fetch(sample.video)).blob()
-      file = new File([blob], `${sample.id}.mp4`, { type: 'video/mp4' })
-    }
-    const formData = new FormData()
-    formData.append('video', file)
-    formData.append('model_name', model)
-
-    const res = await fetch(`${API}/predict`, { method: 'POST', body: formData })
+    const res = await fetch(`${API}/predict`, {
+      method: 'POST',
+      body: formData,
+      signal: AbortSignal.timeout(150000),
+    })
     const data = await res.json().catch(() => null)
     if (!res.ok || !data || data.status !== 'success') {
       setError(data?.message || t('Request failed.'))
@@ -166,8 +175,12 @@ const fileName = sample ? `${sample.id}.mp4` : rawFile?.name
     }
     setResult(data)
     setTimeout(loadHistory, 1500)
-  } catch {
-    setError(t('Backend is not reachable. It may still be waking up.'))
+  } catch (e) {
+    setError(
+      e.name === 'TimeoutError'
+        ? t('The server took too long and probably ran out of memory.')
+        : t('Backend is not reachable. It may still be waking up.')
+    )
   } finally {
     setLoading(false)
   }
@@ -210,6 +223,7 @@ const fileName = sample ? `${sample.id}.mp4` : rawFile?.name
     waking: t('Waking the server, the first run can take about a minute.'),
     ready: t('Server ready.'),
     down: t('Server unreachable.'),
+
   }[server]
 
   return (
@@ -308,14 +322,15 @@ const fileName = sample ? `${sample.id}.mp4` : rawFile?.name
               type="button"
               className="demo__run"
               onClick={handlePredict}
-              disabled={loading}
               aria-busy={loading}
+              disabled={loading || (sample && sampleData?.id !== sample.id)}
             >
               {loading ? `${t('Analyzing')}... ${elapsed} s` : t('Run detection')}
             </button>
             <p className="demo__status" data-state={server}>
               {serverText}
             </p>
+            
           </div>
 
           <h2 className="demo__label">
@@ -333,9 +348,10 @@ const fileName = sample ? `${sample.id}.mp4` : rawFile?.name
               {loading
                 ? t('Running the model on your clip.')
                 : t('Pick a clip and a model, then run detection.')}
+                 
             </p>
           )}
-
+         
           {r && (
             <div className="demo__result" data-severity={levelOf(label)}>
               <div className="demo__verdict">
@@ -343,7 +359,7 @@ const fileName = sample ? `${sample.id}.mp4` : rawFile?.name
                 <span className="demo__verdict-label">{t(label)}</span>
                 {r.uncertain && <span className="demo__tag">{t('low confidence')}</span>}
                 {result.precomputed && (
-  <span className="demo__tag demo__tag--neutral">{t('precomputed')}</span>
+  <span className="demo__tag demo__tag--neutral">{t('precomputed, hardware issues')}</span>
 )}
               </div>
 
@@ -389,7 +405,7 @@ const fileName = sample ? `${sample.id}.mp4` : rawFile?.name
                 </figure>
               )}
 
-              {r.is_accident && r.severity === 'major' && (
+              {r.is_accident && r.severity === 'major' && !result.precomputed && (
                 <button type="button" className="demo__report" onClick={handleDownloadReport}>
                   {t('Download report')}
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" aria-hidden="true">
