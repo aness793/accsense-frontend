@@ -398,13 +398,6 @@ const handlePredict = async () => {
                 ))}
               </ol>
 
-              {r.gradcam && (
-                <figure className="demo__cam">
-                  <img src={`data:image/jpeg;base64,${r.gradcam}`} alt={t('Grad-CAM heatmap')} />
-                  <figcaption>{t('where the model looked, not the impact')}</figcaption>
-                </figure>
-              )}
-
               {r.is_accident && r.severity === 'major' && !result.precomputed && (
                 <button type="button" className="demo__report" onClick={handleDownloadReport}>
                   {t('Download report')}
