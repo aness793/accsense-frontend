@@ -17,26 +17,34 @@ function App() {
 )
   const [page,changePage] = useState('home')
     const { t } = useTranslation()
-
+const [menuOpen, setMenuOpen] = useState(false)
+const go = (page) => { changePage(page); setMenuOpen(false) }
   return (
 
     <div className={nightMode ? 'nightMode ' : 'dayMode '}>
-      <div className={nightMode? "navBar navBarNight" : "navBar"}>
-        <div className="name" onClick={() => changePage('home')} >
+<div className={`navBar ${nightMode ? 'navBarNight' : ''} ${menuOpen ? 'navBar--open' : ''}`}>        <div className="name" onClick={() => changePage('home')} >
           <span>
             <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 24 24"  stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-check preview-icon"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
             <p>    Acci</p>    <p className='sense'>Sense</p>        
                       </span>
 
-            </div>
-        <div className="menu">
+        </div>
+        <button
+  type="button"
+  className="burger"
+  aria-label="Menu"
+  aria-expanded={menuOpen}
+  onClick={() => setMenuOpen((o) => !o)}
+>
+  <span /><span /><span />
+</button>
+
           <div className="navigation-list">
-            <span onClick={()=> changePage('home')}>{t('Home')}</span>
-              <span onClick={()=> changePage('performance')} >{t('performance')}</span>
-              <span onClick={()=> changePage('architecture')}>{t('architecture')}</span>
-              <span onClick={()=> changePage('mqtt')}>Live Monitoring</span>
-          </div>
-                
+    <span onClick={() => go('home')}>{t('Home')}</span>
+    <span onClick={() => go('performance')}>{t('performance')}</span>
+    <span onClick={() => go('architecture')}>{t('architecture')}</span>
+    <span onClick={() => go('mqtt')}>{t('live_monitor')}</span>
+  </div>
           <div className="preferences-navbar">
             <span className="language">
             <label htmlFor="menu" className='languagelabel'>
@@ -73,7 +81,7 @@ function App() {
 
             </span>
           </div>
-            </div>
+        
         </div>
       <div className="mainContent">
         {page == 'home' &&
